@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["Aleksandr Startsev <norbyt93@gmail.com>"]
 edition = "2018"
 license = "Apache-2.0"
-keywords = ["redis", "regular expression"]
+keywords = ["redis", "regular", "expression"]
 description = "Simple rust redis module to use regular expression"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
