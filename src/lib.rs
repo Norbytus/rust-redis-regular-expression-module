@@ -64,6 +64,6 @@ redis_module!{
     version: 0.1,
     data_types: [],
     commands: [
-        ["reg", execute_regular_expression, ""],
+        ["rgkey", execute_regular_expression, "read"],
     ]
 }
