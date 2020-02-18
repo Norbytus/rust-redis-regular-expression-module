@@ -6,6 +6,7 @@ edition = "2018"
 license = "Apache-2.0"
 keywords = ["redis", "regular", "expression"]
 description = "Simple rust redis module to use regular expression"
+repository = "https://github.com/Norbytus/rust-redis-module"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [lib]
