@@ -114,7 +114,7 @@ redis_module!{
     version: 0.1,
     data_types: [],
     commands: [
-        ["rgkey", find_keys_by_rg, "readonly"],
-        ["rgvalue", find_values_by_rg, "readonly"],
+        ["rgkeys", find_keys_by_rg, "readonly"],
+        ["rgvalues", find_values_by_rg, "readonly"],
     ]
 }
