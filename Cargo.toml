@@ -1,6 +1,6 @@
 [package]
 name = "redis_regular_expression_module"
-version = "0.1.1"
+version = "0.2.0"
 authors = ["Aleksandr Startsev <norbyt93@gmail.com>"]
 edition = "2018"
 license = "Apache-2.0"
@@ -12,5 +12,5 @@ description = "Simple rust redis module to use regular expression"
 crate-type = ["cdylib"]
 
 [dependencies]
-redis-module = "0.6.0"
+redis-module = "0.7.0"
 regex = "1"
