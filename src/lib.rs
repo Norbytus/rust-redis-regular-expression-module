@@ -12,7 +12,9 @@ fn get_regular_expression(raw_expression: &str) -> Result<Regex, RedisError> {
     }
 }
 
-fn handle_redis_command_result(result: Vec<RedisValue>) -> Vec<String> {
+fn handle_redis_command_result(result: Vec<RedisValue>)
+    -> impl Iterator<Item = String>
+{
     result
         .into_iter()
         .map(|value| match value {
@@ -21,7 +23,6 @@ fn handle_redis_command_result(result: Vec<RedisValue>) -> Vec<String> {
         })
         .filter(|value| value.is_some())
         .map(|value| value.unwrap())
-        .collect::<Vec<String>>()
 }
 
 
@@ -46,7 +47,6 @@ fn find_keys_by_rg(ctx: &Context, args: Vec<String>) -> RedisResult {
     }?;
 
     let result_redis_value: Vec<RedisValue> = handle_redis_command_result(result)
-        .into_iter()
         .filter(move |s| reg.is_match(&s))
         .map(|s| RedisValue::SimpleString(s))
         .collect();
@@ -84,7 +84,8 @@ fn find_values_by_rg(ctx: &Context, args: Vec<String>) -> RedisResult {
         _ => Err(RedisError::Str("Wrong return result from `MGET` command, expected array.")),
     }?;
 
-    let result_redis_keys: Vec<String> = handle_redis_command_result(result_keys_command);
+    let result_redis_keys: Vec<String> = handle_redis_command_result(result_keys_command)
+        .collect();
 
     let response_from_mget_command = ctx.call(
         REDIS_COMMAND_MGET,
@@ -97,7 +98,6 @@ fn find_values_by_rg(ctx: &Context, args: Vec<String>) -> RedisResult {
     }?;
 
     let result_redis_value: Vec<RedisValue> = handle_redis_command_result(result_from_mget_command)
-        .into_iter()
         .filter(move |s| reg.is_match(&s))
         .map(|s| RedisValue::SimpleString(s))
         .collect();
