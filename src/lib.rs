@@ -1,6 +1,5 @@
 use crate::args::GetRegularExpression;
 use redis_module::{redis_command, redis_module, Context, RedisError, RedisResult, RedisValue};
-use regex::Regex;
 use std::convert::TryFrom;
 
 pub mod args;
