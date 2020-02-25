@@ -1,6 +1,6 @@
 [package]
 name = "redis_regular_expression_module"
-version = "0.2.4"
+version = "0.3.0"
 authors = ["Aleksandr Startsev <norbyt93@gmail.com>"]
 edition = "2018"
 license = "Apache-2.0"
