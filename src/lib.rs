@@ -12,6 +12,7 @@ use std::convert::TryFrom;
 pub mod args;
 
 const REDIS_COMMAND_KEYS: &'static str = "KEYS";
+const REDIS_PATTERN_KEY_ALL: &'static str = "*";
 
 fn handle_redis_command_result(result: Vec<RedisValue>) -> impl Iterator<Item = String> {
     result
@@ -27,7 +28,7 @@ fn handle_redis_command_result(result: Vec<RedisValue>) -> impl Iterator<Item = 
 fn find_keys_by_rg(ctx: &Context, args: Vec<String>) -> RedisResult {
     let args = crate::args::FindByKey::try_from(args)?;
 
-    let response_from_command = ctx.call(REDIS_COMMAND_KEYS, &["*"])?;
+    let response_from_command = ctx.call(REDIS_COMMAND_KEYS, &[REDIS_PATTERN_KEY_ALL])?;
 
     let result = match response_from_command {
         RedisValue::Array(data) => Ok(data),
