@@ -1,0 +1,12 @@
+[package]
+name = "sand_box"
+version = "0.1.0"
+authors = ["Norbytus <norbyt93@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+redis = "0.15.1"
+chrono = "0.4.10"
+uuid = { version = "0.8.1", features = ["v4"] }
