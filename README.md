@@ -11,3 +11,6 @@ Find all keys by given pattern
 
 ## `RGVALUE`
 Find all values by given pattern
+
+## `RGDELETE`
+Find all values by given pattern and delete them
