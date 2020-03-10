@@ -18,7 +18,7 @@ const RG_KEYS: &'static str = "rgkeys";
 const RG_VALUES: &'static str = "rgvalues";
 const RG_DELETE: &'static str = "rgdelete";
 
-const READONLY: &'static str = "readonly";
+const READ_ONLY: &'static str = "readonly";
 const WRITE: &'static str = "write";
 
 fn handle_redis_command_result(result: Vec<RedisValue>) -> impl Iterator<Item = String> {
@@ -130,8 +130,8 @@ redis_module! {
     version: 0.5,
     data_types: [],
     commands: [
-        [RG_KEYS, find_keys_by_rg, READONLY],
-        [RG_VALUES, find_values_by_rg, READONLY],
+        [RG_KEYS, find_keys_by_rg, READ_ONLY],
+        [RG_VALUES, find_values_by_rg, READ_ONLY],
         [RG_DELETE, delete_keys_by_rg, WRITE],
     ]
 }
