@@ -34,4 +34,35 @@ mod tests {
 
         assert!(is_module_load);
     }
+
+    #[test]
+    fn find_value_by_regex() {
+        let set_value = set_value_in_redis("hello:world:2012", "1");
+        assert!(set_value.is_ok());
+
+        let set_value = set_value_in_redis("helloworld:2012", "1");
+        assert!(set_value.is_ok());
+
+        let set_value = set_value_in_redis("helloworld:2012:test", "1");
+        assert!(set_value.is_ok());
+
+        let get_value = redis::cmd("KEYS")
+            .arg("hello:*:2012")
+            .query::<Vec<String>>(&mut REDIS_CLIENT.get_connection().unwrap());
+
+        assert_eq!(1, get_value.unwrap().len());
+
+        let get_value = redis::cmd("RGKEYS")
+            .arg("hello.*2012$")
+            .query::<Vec<String>>(&mut REDIS_CLIENT.get_connection().unwrap());
+
+        assert_eq!(2, get_value.unwrap().len());
+    }
+
+    fn set_value_in_redis(key: &str, value: &str) -> redis::RedisResult<()> {
+        redis::cmd("SET")
+            .arg(key)
+            .arg(value)
+            .query::<()>(&mut REDIS_CLIENT.get_connection().unwrap())
+    }
 }
