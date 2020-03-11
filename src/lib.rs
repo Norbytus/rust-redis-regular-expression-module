@@ -127,7 +127,7 @@ fn delete_keys_by_rg(ctx: &Context, args: Vec<String>) -> RedisResult {
 
 redis_module! {
     name: "RustRegxCommand",
-    version: 0.5,
+    version: 0.4,
     data_types: [],
     commands: [
         [RG_KEYS, find_keys_by_rg, READ_ONLY],
