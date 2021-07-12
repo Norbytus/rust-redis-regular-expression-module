@@ -1,4 +1,4 @@
-use redis_module::RedisError;
+use redis_module::{RedisError, RedisString};
 use regex::Regex;
 use std::convert::TryFrom;
 
@@ -6,8 +6,8 @@ pub trait GetRegularExpression {
     fn get_regular_expression(&self) -> &Regex;
 }
 
-fn get_regular_expression(raw_expression: &str) -> Result<Regex, RedisError> {
-    match Regex::new(&raw_expression) {
+fn get_regular_expression(raw_expression: &RedisString) -> Result<Regex, RedisError> {
+    match Regex::new(&raw_expression.to_string()) {
         Ok(reg) => Ok(reg),
         Err(e) => Err(RedisError::String(format!("{}", e))),
     }
@@ -23,11 +23,11 @@ impl GetRegularExpression for FindByKey {
     }
 }
 
-impl TryFrom<Vec<String>> for FindByKey {
+impl TryFrom<Vec<RedisString>> for FindByKey {
     type Error = RedisError;
 
-    fn try_from(args: Vec<String>) -> Result<Self, Self::Error> {
-        let args: Vec<String> = args.into_iter().skip(1).collect();
+    fn try_from(args: Vec<RedisString>) -> Result<Self, Self::Error> {
+        let args: Vec<RedisString> = args.into_iter().skip(1).collect();
 
         match args.get(0) {
             Some(arg) => {
@@ -56,11 +56,11 @@ impl GetRegularExpression for FindByValue {
     }
 }
 
-impl TryFrom<Vec<String>> for FindByValue {
+impl TryFrom<Vec<RedisString>> for FindByValue {
     type Error = RedisError;
 
-    fn try_from(args: Vec<String>) -> Result<Self, Self::Error> {
-        let args: Vec<String> = args.into_iter().skip(1).collect();
+    fn try_from(args: Vec<RedisString>) -> Result<Self, Self::Error> {
+        let args: Vec<RedisString> = args.into_iter().skip(1).collect();
 
         let redis_mask = match args.get(0) {
             Some(arg) => Ok(arg.to_string()),
@@ -72,9 +72,6 @@ impl TryFrom<Vec<String>> for FindByValue {
             None => Err(RedisError::Str("Not found second argument")),
         }?;
 
-        Ok(Self {
-            regex: regex,
-            redis_mask: redis_mask,
-        })
+        Ok(Self { regex, redis_mask })
     }
 }
